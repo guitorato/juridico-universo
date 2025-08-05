@@ -17,34 +17,44 @@
             height: 100%;
             width: 100%;
             font-family: Arial, sans-serif;
+            min-height: 100vh;
         }
 
         body {
             background-image: url("imagens/image.png");
-            background-size: cover;
+            background-size: 150%;
             background-position: center;
             background-repeat: no-repeat;
-            color: white;
+            color: black;
+            min-height: 50vh;
         }
 
         .conteudo {
             height: 100%;
             width: 100%;
-            backdrop-filter: brightness(0.7);
             display: flex;
             justify-content: space-between;
             padding: 20px;
+            min-height: 100vh;
         }
 
         .coluna-esquerda {
             width: 65%;
+            position: sticky;
+            top: 80px;
+            align-self: flex-start;
+            z-index: 10;
         }
 
         .bloco-transparente {
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(255, 255, 255, 0.85);
+            /* branco mais transparente */
+            color: black;
+            /* fonte preta */
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 20px;
+            border: 2px solid black;
         }
 
         input[type="text"] {
@@ -52,13 +62,12 @@
             padding: 10px;
             margin-bottom: 20px;
             border-radius: 5px;
-            border: none;
+            border: 1px solid black;
             font-size: 16px;
         }
 
         .lista-artigos {
             max-height: 320px;
-            /* altura suficiente para ~5 itens */
             overflow-y: auto;
             padding-right: 8px;
         }
@@ -67,7 +76,7 @@
             padding: 10px;
             margin-bottom: 10px;
             border-radius: 6px;
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: #f0f0f0;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
@@ -79,10 +88,11 @@
         .artigo label {
             display: block;
             cursor: pointer;
+            color: black;
         }
 
         .artigo input[type="checkbox"]:checked+label {
-            background-color: rgba(255, 255, 255, 0.3);
+            background-color: #e0e0e0;
             padding: 10px;
             border-radius: 6px;
         }
@@ -102,7 +112,7 @@
         }
 
         .ajustes .ajuste-opcao {
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: #f0f0f0;
             padding: 8px 12px;
             margin-bottom: 8px;
             border-radius: 6px;
@@ -117,20 +127,35 @@
         .ajustes .ajuste-opcao label {
             display: block;
             cursor: pointer;
+            color: black;
         }
 
         .ajustes .ajuste-opcao input:checked+label {
-            background-color: rgba(255, 255, 255, 0.3);
+            background-color: #e0e0e0;
             border-radius: 6px;
             padding: 8px 12px;
         }
 
         .coluna-direita {
             width: 30%;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(255, 255, 255, 0.85);
             padding: 20px;
             border-radius: 10px;
-            height: fit-content;
+            border: 2px solid black;
+            position: fixed;
+            right: 20px;
+            top: 100px;
+            z-index: 100;
+        }
+
+        .image-logo {
+            width: 25%;
+            padding: 20px;
+            border-radius: 10px;
+            position: fixed;
+            right: 20px;
+            top: 400px;
+            z-index: 100;
         }
 
         .ficha-criminal h2 {
@@ -138,7 +163,7 @@
         }
 
         .ficha-criminal span {
-            display: block;
+            display: flex;
             margin: 8px 0;
             font-size: 16px;
         }
@@ -156,71 +181,72 @@
         .top-bar {
             width: 100%;
             padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
             align-items: center;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
+            background-color: rgba(255, 255, 255, 0.85);
+            color: black;
             position: sticky;
             top: 0;
             z-index: 999;
+            text-align: center;
         }
 
         .top-bar h1 {
             font-size: 26px;
-            margin: 0;
+            margin: 10;
         }
 
         .botao-voltar {
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 10px 20px;
+            justify-self: end;
+            /* alinha o botão à direita dentro da coluna */
+            background-color: white;
+            color: black;
+            padding: 8px 16px;
             text-decoration: none;
             font-weight: bold;
-            border: 2px solid white;
+            border: 2px solid black;
             border-radius: 8px;
+            font-size: 14px;
             transition: 0.3s ease;
+            white-space: nowrap;
         }
 
         .botao-voltar:hover {
-            background-color: rgba(255, 255, 255, 0.4);
-            color: black;
+            background-color: #ddd;
         }
 
         .botao-limpar {
             margin-top: 20px;
             padding: 10px 20px;
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid white;
+            background-color: white;
+            color: black;
+            border: 2px solid black;
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
             width: 100%;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.3s ease;
         }
 
         .botao-limpar:hover {
-            background-color: white;
-            color: black;
+            background-color: #f0f0f0;
         }
     </style>
 </head>
 
 <body>
     <header class="top-bar">
-        <h1>𝐂𝐚𝐥𝐜𝐮𝐥𝐚𝐝𝐨𝐫𝐚 𝐏𝐞𝐧𝐚𝐥</h1>
+        <div></div> <!-- coluna vazia esquerda -->
+        <h1>⚖️ CALCULADORA PENAL ⚖️</h1>
         <a href="index.html" class="botao-voltar">Voltar</a>
     </header>
     <div class="conteudo">
         <div class="coluna-esquerda">
-            <!-- Lista de artigos -->
             <div class="bloco-transparente">
                 <input type="text" id="pesquisa" placeholder="🔍 Pesquisar artigo..." />
                 <div id="lista-artigos" class="lista-artigos"></div>
             </div>
-
-            <!-- Atenuantes e Agravantes lado a lado -->
             <div class="bloco-transparente ajustes-container">
                 <div class="ajustes">
                     <h3>Atenuantes</h3>
@@ -235,7 +261,6 @@
                     <div class="ajuste-opcao"><input type="checkbox" id="a5" class="ajuste" data-tipo="atenuante"
                             value="10"><label for="a5">Arrependimento Posterior (10%)</label></div>
                 </div>
-
                 <div class="ajustes">
                     <h3>Agravantes</h3>
                     <div class="ajuste-opcao"><input type="checkbox" id="g1" class="ajuste" data-tipo="agravante"
@@ -245,212 +270,23 @@
                 </div>
             </div>
         </div>
-
-        <!-- Ficha Criminal -->
         <div class="coluna-direita ficha-criminal">
             <h2>Ficha Criminal</h2>
             <span>🕓 Meses (sem desconto): <strong id="meses-sem">0</strong></span>
             <span>💰 Multa (sem desconto): <strong id="multa-sem">R$ 0,00</strong></span>
-            <hr style="margin: 10px 0; border: none; border-top: 1px solid #aaa;" />
+            <hr style="margin: 10px 0; border: none; border-top: 1px solid #070707;" />
             <span>🕓 Meses (com desconto): <strong id="meses-com">0</strong></span>
             <span>💰 Multa (com desconto): <strong id="multa-com">R$ 0,00</strong></span>
-
-            <!-- ✅ Adicione aqui -->
             <hr style="margin: 10px 0; border: none; border-top: 1px solid #aaa;" />
             <span>🧾 Afiançável: <strong id="afiançavel">-</strong></span>
             <button id="limpar-ficha" class="botao-limpar">🧹 Limpar Ficha</button>
         </div>
+        <div class="image-logo">
+            <img src="imagens/logo.png" alt="Logo Supremo" style="width: 100%; margin-top: 20px;" />
+        </div>
 
-
-        <!-- 🔁 JS permanece igual (com função atualizarFicha e renderizarArtigos) -->
-
-        <script>
-            const artigos = [
-                { nome: "Porte de C4", meses: 30, multa: 90000, fianca: "Não" },
-                { nome: "Trajes do Poder Público", meses: 60, multa: 150000, fianca: "Não" },
-                { nome: "Assalto ao Ice Storm", meses: 40, multa: 90000, fianca: "Não" },
-                { nome: "Assalto ao Navio do Porto", meses: 40, multa: 90000, fianca: "Não" },
-                { nome: "Assalto ao Galinheiro ou Aquaque", meses: 40, multa: 90000, fianca: "Não" },
-                { nome: "Assalto ao Hollywood ou Titanic", meses: 50, multa: 90000, fianca: "Não" },
-                { nome: "Assalto ao Banco Fleeca ou Banco Pacote", meses: 50, multa: 90000, fianca: "Não" },
-                { nome: "Assalto ao Joalheiro", meses: 55, multa: 90000, fianca: "Não" },
-                { nome: "Assalto ao Banco Central", meses: 70, multa: 90000, fianca: "Não" },
-                { nome: "Assalto ao Ferro Velho", meses: 60, multa: 90000, fianca: "Não" },
-                { nome: "Invasão ao Departamento de Polícia", meses: 140, multa: 750000, fianca: "Não" },
-                { nome: "Assalto a Niobe", meses: 60, multa: 90000, fianca: "Não" },
-                { nome: "Assalto a Madeireira", meses: 60, multa: 90000, fianca: "Não" },
-                { nome: "Assalto a Residência", meses: 30, multa: 90000, fianca: "Não" },
-                { nome: "Assalto a Civil", meses: 30, multa: 90000, fianca: "Não" },
-                { nome: "Tentativa de Furto ou Roubo", meses: 60, multa: 135000, fianca: "Não" },
-                { nome: "Roubo", meses: 40, multa: 90000, fianca: "Não" },
-                { nome: "Desacato ao Servidor Público", meses: 50, multa: 1000000, fianca: "Não" },
-                { nome: "Extorsão", meses: 35, multa: 105000, fianca: "Não" },
-                { nome: "Corrupção Ativa (Suborno)", meses: 35, multa: 150000, fianca: "Não" },
-                { nome: "Assédio Moral ou Físico", meses: 30, multa: 90000, fianca: "Não" },
-                { nome: "Perseguição", meses: 30, multa: 90000, fianca: "Não" },
-                { nome: "Formação de Quadrilha", meses: 40, multa: 150000, fianca: "Não" },
-                { nome: "Caça Ilegal de Animais", meses: 35, multa: 90000, fianca: "Não" },
-                { nome: "Desobediência ao Servidor Público", meses: 30, multa: 90000, fianca: "Não" },
-                { nome: "Homicídio Doloso", meses: 75, multa: 300000, fianca: "Não" },
-                { nome: "Latrocínio", meses: 75, multa: 300000, fianca: "Não" },
-                { nome: "Sequestro ou Cárcere Privado", meses: 35, multa: 150000, fianca: "Não" },
-                { nome: "Tentativa de Homicidio", meses: 40, multa: 150000, fianca: "Não" },
-                { nome: "Homicídio a Servidor Público em Serviço", meses: 100, multa: 450000, fianca: "Não" },
-                { nome: "Homicídio", meses: 120, multa: 750000, fianca: "Não" },
-                { nome: "Porte de Arma Pesada", meses: 45, multa: 135000, fianca: "Não" },
-                { nome: "Mal Uso de Arma de Fogo ráfico de Drogas", meses: 30, multa: 90000, fianca: "Não" },
-                { nome: "Trafico de Drogas", meses: 30, multa: 90000, fianca: "Não" },
-                { nome: "Tráfico de Material Balístico", meses: 30, multa: 90000, fianca: "Não" },
-                { nome: "Peculato", meses: 40, multa: 90000, fianca: "Não" },
-                { nome: "Corrupção Passiva", meses: 30, multa: 150000, fianca: "Não" },
-                { nome: "Prevaricação", meses: 35, multa: 150000, fianca: "Não" },
-                { nome: "Condescendência Criminosa", meses: 30, multa: 135000, fianca: "Não" },
-                { nome: "Abuso de Autoridade", meses: 30, multa: 225000, fianca: "Não" },
-                { nome: "Infração de Trânsito", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Direção Perigosa", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Direção Sob Efeito de Embriaguez", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Participação de Corridas Clandestinas", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Porte de Algemas", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Porte de Lockpick", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Utilização ou Porte do Colete Balístico", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Uso de Máscaras", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Utilização Capacete Balístico", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Utilização de Coldre", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Crimes Cibernéticos", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Resistência a Prisão", meses: 35, multa: 105000, fianca: "Sim" },
-                { nome: "Omissão de Socorro", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Fuga de Abordagem Policial", meses: 35, multa: 90000, fianca: "Sim" },
-                { nome: "Obstrução de Justiça", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Furto", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Perturbação da Ordem Pública", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Multas Pendentes", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Invasão a Propriedade Privada", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Falsidade Ideológica", meses: 25, multa: 90000, fianca: "Sim" },
-                { nome: "Falso Testemunho", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Calúnia", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Poluição Sonora", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Lesão Corporal", meses: 35, multa: 90000, fianca: "Sim" },
-                { nome: "Ameaça a Terceiros", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Homicídio Culposo", meses: 35, multa: 150000, fianca: "Sim" },
-                { nome: "Porte de Arma Leve", meses: 30, multa: 60000, fianca: "Sim" },
-                { nome: "Porte de Munição", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Porte de Munição acima do Permitido", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Porte de Drogas", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Posse de Itens Ilegais", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Dinheiro Sujo", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Inserção de Dados Falsos", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Abandono de Função", meses: 30, multa: 90000, fianca: "Sim" },
-                { nome: "Desobediência", meses: 30, multa: 90000, fianca: "Sim" }
-            ];
-
-
-
-            const lista = document.getElementById("lista-artigos");
-            const pesquisa = document.getElementById("pesquisa");
-            const ajustes = document.querySelectorAll(".ajuste");
-
-            function atualizarFicha() {
-                const checkboxes = document.querySelectorAll(".artigo input[type='checkbox']");
-                let somaMeses = 0;
-                let somaMulta = 0;
-                let existeFiancaSim = false;
-                let existeFiancaNao = false;
-
-                checkboxes.forEach((chk, idx) => {
-                    if (chk.checked) {
-                        const artigo = artigos[idx];
-                        somaMeses += artigo.meses;
-                        somaMulta += artigo.multa;
-
-                        if (artigo.fianca === "Sim") {
-                            existeFiancaSim = true;
-                        } else if (artigo.fianca === "Não") {
-                            existeFiancaNao = true;
-                        }
-                    }
-                });
-
-                let desconto = 0;
-                let acrescimo = 0;
-
-                ajustes.forEach((ajuste) => {
-                    if (ajuste.checked) {
-                        const valor = parseFloat(ajuste.value);
-                        if (ajuste.dataset.tipo === "atenuante") {
-                            desconto += valor;
-                        } else if (ajuste.dataset.tipo === "agravante") {
-                            acrescimo += valor;
-                        }
-                    }
-                });
-
-                const mesesDescontados = somaMeses * (1 - desconto / 100) * (1 + acrescimo / 100);
-                const multaDescontada = somaMulta * (1 - desconto / 100) * (1 + acrescimo / 100);
-
-                document.getElementById("meses-sem").textContent = somaMeses;
-                document.getElementById("multa-sem").textContent = somaMulta.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-                document.getElementById("meses-com").textContent = Math.round(mesesDescontados);
-                document.getElementById("multa-com").textContent = multaDescontada.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-
-                // ✅ Atualizar campo Afiançável
-                const afiançavelEl = document.getElementById("afiançavel");
-                if (existeFiancaSim) {
-                    afiançavelEl.textContent = "Sim";
-                } else if (existeFiancaNao) {
-                    afiançavelEl.textContent = "Não";
-                } else {
-                    afiançavelEl.textContent = "-";
-                }
-            }
-
-            function renderizarArtigos(filtro = "") {
-                lista.innerHTML = "";
-                artigos.forEach((artigo, idx) => {
-                    if (artigo.nome.toLowerCase().includes(filtro.toLowerCase())) {
-                        const div = document.createElement("div");
-                        div.className = "artigo";
-                        div.innerHTML = `
-        <input type="checkbox" id="artigo-${idx}">
-        <label for="artigo-${idx}">
-          <strong>${artigo.nome}</strong><br>
-          <small>${artigo.meses} meses • R$ ${artigo.multa.toLocaleString('pt-BR')} • Fiança: ${artigo.fianca}</small>
-        </label>
-      `;
-                        div.querySelector("input").addEventListener("change", atualizarFicha);
-                        lista.appendChild(div);
-                    }
-                });
-            }
-
-            pesquisa.addEventListener("input", (e) => {
-                renderizarArtigos(e.target.value);
-            });
-
-            ajustes.forEach((el) => {
-                el.addEventListener("change", atualizarFicha);
-            });
-
-            artigos.sort((a, b) => a.nome.localeCompare(b.nome));
-            renderizarArtigos();
-
-            document.getElementById("limpar-ficha").addEventListener("click", () => {
-                // Desmarcar artigos
-                document.querySelectorAll(".artigo input[type='checkbox']").forEach(cb => cb.checked = false);
-
-                // Desmarcar atenuantes e agravantes
-                ajustes.forEach(cb => cb.checked = false);
-
-                // Resetar valores na ficha
-                document.getElementById("meses-sem").textContent = "0";
-                document.getElementById("multa-sem").textContent = "R$ 0,00";
-                document.getElementById("meses-com").textContent = "0";
-                document.getElementById("multa-com").textContent = "R$ 0,00";
-                document.getElementById("afiançavel").textContent = "-";
-            });
-
-        </script>
-
-
+    </div>
+    <script src="penal.js"></script>
 </body>
 
 </html>
