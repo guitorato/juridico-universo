@@ -2,233 +2,420 @@
 <html lang="pt-BR">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Supremo Tribunal Universo</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Supremo Tribunal Universo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    html,
-    body {
-      height: 100%;
-      width: 100%;
-      font-family: Arial, sans-serif;
-    }
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            font-family: Arial, sans-serif;
+        }
 
-    body {
-      background-image: url("imagens/fundo.png");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      color: white;
-    }
+        body {
+            background-image: url("imagens/fundo.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+        }
 
-    .conteudo {
-      height: 100%;
-      width: 100%;
-      backdrop-filter: brightness(0.7);
-      display: flex;
-      justify-content: space-between;
-      padding: 20px;
-    }
+        .conteudo {
+            height: 100%;
+            width: 100%;
+            backdrop-filter: brightness(0.7);
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
 
-    .coluna-esquerda {
-      width: 65%;
-    }
+        .coluna-esquerda {
+            width: 65%;
+        }
 
-    .coluna-direita {
-      width: 30%;
-      background-color: rgba(0, 0, 0, 0.6);
-      padding: 20px;
-      border-radius: 10px;
-      height: fit-content;
-    }
+        .bloco-transparente {
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
 
-    input[type="text"] {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
-      border-radius: 5px;
-      border: none;
-      font-size: 16px;
-    }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
 
-    .lista-artigos {
-      max-height: 60vh;
-      overflow-y: auto;
-      margin-bottom: 30px;
-    }
+        .lista-artigos {
+            max-height: 320px;
+            /* altura suficiente para ~5 itens */
+            overflow-y: auto;
+            padding-right: 8px;
+        }
 
-    .artigo {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 10px;
-      margin-bottom: 10px;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-    }
+        .artigo {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            background-color: rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
-    .artigo input[type="checkbox"] {
-      margin-right: 10px;
-      transform: scale(1.2);
-    }
+        .artigo input[type="checkbox"] {
+            display: none;
+        }
 
-    .ficha-criminal h2 {
-      margin-bottom: 10px;
-    }
+        .artigo label {
+            display: block;
+            cursor: pointer;
+        }
 
-    .ficha-criminal span {
-      display: block;
-      margin: 8px 0;
-      font-size: 16px;
-    }
+        .artigo input[type="checkbox"]:checked+label {
+            background-color: rgba(255, 255, 255, 0.3);
+            padding: 10px;
+            border-radius: 6px;
+        }
 
-    .ajustes {
-      margin-top: 20px;
-    }
+        .ajustes-container {
+            display: flex;
+            gap: 20px;
+        }
 
-    .ajustes h3 {
-      margin-bottom: 10px;
-      font-size: 18px;
-    }
+        .ajustes {
+            flex: 1;
+        }
 
-    .ajustes label {
-      display: block;
-      margin-bottom: 5px;
-    }
+        .ajustes h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
 
-    .rodape {
-      color: white;
-      font-size: 12px;
-      background-color: rgba(0, 0, 0, 0.3);
-      padding: 5px 10px;
-      border-radius: 5px;
-      text-align: right;
-      margin: 10px;
-    }
-  </style>
+        .ajustes .ajuste-opcao {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .ajustes .ajuste-opcao input {
+            display: none;
+        }
+
+        .ajustes .ajuste-opcao label {
+            display: block;
+            cursor: pointer;
+        }
+
+        .ajustes .ajuste-opcao input:checked+label {
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            padding: 8px 12px;
+        }
+
+        .coluna-direita {
+            width: 30%;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            height: fit-content;
+        }
+
+        .ficha-criminal h2 {
+            margin-bottom: 10px;
+        }
+
+        .ficha-criminal span {
+            display: block;
+            margin: 8px 0;
+            font-size: 16px;
+        }
+
+        .rodape {
+            color: white;
+            font-size: 12px;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-align: right;
+            margin: 10px;
+        }
+
+        .top-bar {
+            width: 100%;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .top-bar h1 {
+            font-size: 26px;
+            margin: 0;
+        }
+
+        .botao-voltar {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            border: 2px solid white;
+            border-radius: 8px;
+            transition: 0.3s ease;
+        }
+
+        .botao-voltar:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+            color: black;
+        }
+    </style>
 </head>
 
 <body>
-  <div class="conteudo">
-    <div class="coluna-esquerda">
-      <input type="text" id="pesquisa" placeholder="🔍 Pesquisar artigo..." />
-      <div id="lista-artigos" class="lista-artigos"></div>
+    <header class="top-bar">
+        <h1>𝐂𝐚𝐥𝐜𝐮𝐥𝐚𝐝𝐨𝐫𝐚 𝐏𝐞𝐧𝐚𝐥</h1>
+        <a href="index.html" class="botao-voltar">Voltar</a>
+    </header>
+    <div class="conteudo">
+        <div class="coluna-esquerda">
+            <!-- Lista de artigos -->
+            <div class="bloco-transparente">
+                <input type="text" id="pesquisa" placeholder="🔍 Pesquisar artigo..." />
+                <div id="lista-artigos" class="lista-artigos"></div>
+            </div>
 
-      <div class="ajustes">
-        <h3>Atenuantes</h3>
-        <label><input type="checkbox" class="ajuste" data-tipo="atenuante" value="40" /> Réu Primário (40%)</label>
-        <label><input type="checkbox" class="ajuste" data-tipo="atenuante" value="10" /> Réu Confesso (10%)</label>
-        <label><input type="checkbox" class="ajuste" data-tipo="atenuante" value="30" /> Colaboração (30%)</label>
-        <label><input type="checkbox" class="ajuste" data-tipo="atenuante" value="30" /> Delação Premiada (30%)</label>
-        <label><input type="checkbox" class="ajuste" data-tipo="atenuante" value="10" /> Arrependimento Posterior (10%)</label>
+            <!-- Atenuantes e Agravantes lado a lado -->
+            <div class="bloco-transparente ajustes-container">
+                <div class="ajustes">
+                    <h3>Atenuantes</h3>
+                    <div class="ajuste-opcao"><input type="checkbox" id="a1" class="ajuste" data-tipo="atenuante"
+                            value="40"><label for="a1">Réu Primário (40%)</label></div>
+                    <div class="ajuste-opcao"><input type="checkbox" id="a2" class="ajuste" data-tipo="atenuante"
+                            value="10"><label for="a2">Réu Confesso (10%)</label></div>
+                    <div class="ajuste-opcao"><input type="checkbox" id="a3" class="ajuste" data-tipo="atenuante"
+                            value="30"><label for="a3">Colaboração (30%)</label></div>
+                    <div class="ajuste-opcao"><input type="checkbox" id="a4" class="ajuste" data-tipo="atenuante"
+                            value="30"><label for="a4">Delação Premiada (30%)</label></div>
+                    <div class="ajuste-opcao"><input type="checkbox" id="a5" class="ajuste" data-tipo="atenuante"
+                            value="10"><label for="a5">Arrependimento Posterior (10%)</label></div>
+                </div>
 
-        <h3 style="margin-top:20px;">Agravantes</h3>
-        <label><input type="checkbox" class="ajuste" data-tipo="agravante" value="20" /> Réu Foragido (20%)</label>
-        <label><input type="checkbox" class="ajuste" data-tipo="agravante" value="30" /> Reincidência (30%)</label>
-      </div>
-    </div>
+                <div class="ajustes">
+                    <h3>Agravantes</h3>
+                    <div class="ajuste-opcao"><input type="checkbox" id="g1" class="ajuste" data-tipo="agravante"
+                            value="20"><label for="g1">Réu Foragido (20%)</label></div>
+                    <div class="ajuste-opcao"><input type="checkbox" id="g2" class="ajuste" data-tipo="agravante"
+                            value="30"><label for="g2">Reincidência (30%)</label></div>
+                </div>
+            </div>
+        </div>
 
-    <div class="coluna-direita ficha-criminal">
-      <h2>Ficha Criminal</h2>
-      <span>🕓 Meses (sem desconto): <strong id="meses-sem">0</strong></span>
-      <span>💰 Multa (sem desconto): <strong id="multa-sem">R$ 0,00</strong></span>
-      <hr style="margin: 10px 0; border: none; border-top: 1px solid #aaa;" />
-      <span>🕓 Meses (com desconto): <strong id="meses-com">0</strong></span>
-      <span>💰 Multa (com desconto): <strong id="multa-com">R$ 0,00</strong></span>
-    </div>
-  </div>
+        <!-- Ficha Criminal -->
+        <div class="coluna-direita ficha-criminal">
+            <h2>Ficha Criminal</h2>
+            <span>🕓 Meses (sem desconto): <strong id="meses-sem">0</strong></span>
+            <span>💰 Multa (sem desconto): <strong id="multa-sem">R$ 0,00</strong></span>
+            <hr style="margin: 10px 0; border: none; border-top: 1px solid #aaa;" />
+            <span>🕓 Meses (com desconto): <strong id="meses-com">0</strong></span>
+            <span>💰 Multa (com desconto): <strong id="multa-com">R$ 0,00</strong></span>
 
-  <footer class="rodape">
-    © 2025 Supremo Tribunal Universo — Criado por Guilherme R
-  </footer>
+            <!-- ✅ Adicione aqui -->
+            <hr style="margin: 10px 0; border: none; border-top: 1px solid #aaa;" />
+            <span>🧾 Afiançável: <strong id="afiançavel">-</strong></span>
+        </div>
 
-  <script>
-    const artigos = [
-      { nome: "Porte de C4", meses: 30, multa: 90000 },
-      { nome: "Trajes do Poder Público", meses: 60, multa: 150000 },
-      { nome: "Assalto ao Ice Storm", meses: 40, multa: 90000 },
-      { nome: "Invasão ao Departamento de Polícia", meses: 140, multa: 750000 },
-      { nome: "Corrupção Ativa (Suborno)", meses: 35, multa: 150000 },
-      { nome: "Homicídio Culposo", meses: 35, multa: 150000 }
-      // Adicione o restante aqui...
-    ];
 
-    const lista = document.getElementById("lista-artigos");
-    const pesquisa = document.getElementById("pesquisa");
-    const ajustes = document.querySelectorAll(".ajuste");
+        <!-- 🔁 JS permanece igual (com função atualizarFicha e renderizarArtigos) -->
 
-    function atualizarFicha() {
-      const checkboxes = document.querySelectorAll(".artigo input[type='checkbox']");
-      let somaMeses = 0;
-      let somaMulta = 0;
+        <script>
+            const artigos = [
+                { nome: "Porte de C4", meses: 30, multa: 90000, fianca: "Não" },
+                { nome: "Trajes do Poder Público", meses: 60, multa: 150000, fianca: "Não" },
+                { nome: "Assalto ao Ice Storm", meses: 40, multa: 90000, fianca: "Não" },
+                { nome: "Assalto ao Navio do Porto", meses: 40, multa: 90000, fianca: "Não" },
+                { nome: "Assalto ao Galinheiro ou Aquaque", meses: 40, multa: 90000, fianca: "Não" },
+                { nome: "Assalto ao Hollywood ou Titanic", meses: 50, multa: 90000, fianca: "Não" },
+                { nome: "Assalto ao Banco Fleeca ou Banco Pacote", meses: 50, multa: 90000, fianca: "Não" },
+                { nome: "Assalto ao Joalheiro", meses: 55, multa: 90000, fianca: "Não" },
+                { nome: "Assalto ao Banco Central", meses: 70, multa: 90000, fianca: "Não" },
+                { nome: "Assalto ao Ferro Velho", meses: 60, multa: 90000, fianca: "Não" },
+                { nome: "Invasão ao Departamento de Polícia", meses: 140, multa: 750000, fianca: "Não" },
+                { nome: "Assalto a Niobe", meses: 60, multa: 90000, fianca: "Não" },
+                { nome: "Assalto a Madeireira", meses: 60, multa: 90000, fianca: "Não" },
+                { nome: "Assalto a Residência", meses: 30, multa: 90000, fianca: "Não" },
+                { nome: "Assalto a Civil", meses: 30, multa: 90000, fianca: "Não" },
+                { nome: "Tentativa de Furto ou Roubo", meses: 60, multa: 135000, fianca: "Não" },
+                { nome: "Roubo", meses: 40, multa: 90000, fianca: "Não" },
+                { nome: "Desacato ao Servidor Público", meses: 50, multa: 1000000, fianca: "Não" },
+                { nome: "Extorsão", meses: 35, multa: 105000, fianca: "Não" },
+                { nome: "Corrupção Ativa (Suborno)", meses: 35, multa: 150000, fianca: "Não" },
+                { nome: "Assédio Moral ou Físico", meses: 30, multa: 90000, fianca: "Não" },
+                { nome: "Perseguição", meses: 30, multa: 90000, fianca: "Não" },
+                { nome: "Formação de Quadrilha", meses: 40, multa: 150000, fianca: "Não" },
+                { nome: "Caça Ilegal de Animais", meses: 35, multa: 90000, fianca: "Não" },
+                { nome: "Desobediência ao Servidor Público", meses: 30, multa: 90000, fianca: "Não" },
+                { nome: "Homicídio Doloso", meses: 75, multa: 300000, fianca: "Não" },
+                { nome: "Latrocínio", meses: 75, multa: 300000, fianca: "Não" },
+                { nome: "Sequestro ou Cárcere Privado", meses: 35, multa: 150000, fianca: "Não" },
+                { nome: "Tentativa de Homicidio", meses: 40, multa: 150000, fianca: "Não" },
+                { nome: "Homicídio a Servidor Público em Serviço", meses: 100, multa: 450000, fianca: "Não" },
+                { nome: "Homicídio", meses: 120, multa: 750000, fianca: "Não" },
+                { nome: "Porte de Arma Pesada", meses: 45, multa: 135000, fianca: "Não" },
+                { nome: "Mal Uso de Arma de Fogo ráfico de Drogas", meses: 30, multa: 90000, fianca: "Não" },
+                { nome: "Trafico de Drogas", meses: 30, multa: 90000, fianca: "Não" },
+                { nome: "Tráfico de Material Balístico", meses: 30, multa: 90000, fianca: "Não" },
+                { nome: "Peculato", meses: 40, multa: 90000, fianca: "Não" },
+                { nome: "Corrupção Passiva", meses: 30, multa: 150000, fianca: "Não" },
+                { nome: "Prevaricação", meses: 35, multa: 150000, fianca: "Não" },
+                { nome: "Condescendência Criminosa", meses: 30, multa: 135000, fianca: "Não" },
+                { nome: "Abuso de Autoridade", meses: 30, multa: 225000, fianca: "Não" },
+                { nome: "Infração de Trânsito", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Direção Perigosa", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Direção Sob Efeito de Embriaguez", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Participação de Corridas Clandestinas", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Porte de Algemas", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Porte de Lockpick", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Utilização ou Porte do Colete Balístico", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Uso de Máscaras", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Utilização Capacete Balístico", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Utilização de Coldre", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Crimes Cibernéticos", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Resistência a Prisão", meses: 35, multa: 105000, fianca: "Sim" },
+                { nome: "Omissão de Socorro", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Fuga de Abordagem Policial", meses: 35, multa: 90000, fianca: "Sim" },
+                { nome: "Obstrução de Justiça", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Furto", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Perturbação da Ordem Pública", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Multas Pendentes", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Invasão a Propriedade Privada", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Falsidade Ideológica", meses: 25, multa: 90000, fianca: "Sim" },
+                { nome: "Falso Testemunho", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Calúnia", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Poluição Sonora", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Lesão Corporal", meses: 35, multa: 90000, fianca: "Sim" },
+                { nome: "Ameaça a Terceiros", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Homicídio Culposo", meses: 35, multa: 150000, fianca: "Sim" },
+                { nome: "Porte de Arma Leve", meses: 30, multa: 60000, fianca: "Sim" },
+                { nome: "Porte de Munição", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Porte de Munição acima do Permitido", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Porte de Drogas", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Posse de Itens Ilegais", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Dinheiro Sujo", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Inserção de Dados Falsos", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Abandono de Função", meses: 30, multa: 90000, fianca: "Sim" },
+                { nome: "Desobediência", meses: 30, multa: 90000, fianca: "Sim" }
+            ];
 
-      checkboxes.forEach((chk, idx) => {
-        if (chk.checked) {
-          somaMeses += artigos[idx].meses;
-          somaMulta += artigos[idx].multa;
-        }
-      });
 
-      // Calcular total de porcentagem
-      let desconto = 0;
-      let acrescimo = 0;
 
-      ajustes.forEach((ajuste) => {
-        if (ajuste.checked) {
-          const valor = parseFloat(ajuste.value);
-          if (ajuste.dataset.tipo === "atenuante") {
-            desconto += valor;
-          } else if (ajuste.dataset.tipo === "agravante") {
-            acrescimo += valor;
-          }
-        }
-      });
+            const lista = document.getElementById("lista-artigos");
+            const pesquisa = document.getElementById("pesquisa");
+            const ajustes = document.querySelectorAll(".ajuste");
 
-      // Aplicar descontos e acréscimos
-      const mesesDescontados = somaMeses * (1 - desconto / 100) * (1 + acrescimo / 100);
-      const multaDescontada = somaMulta * (1 - desconto / 100) * (1 + acrescimo / 100);
+            function atualizarFicha() {
+                const checkboxes = document.querySelectorAll(".artigo input[type='checkbox']");
+                let somaMeses = 0;
+                let somaMulta = 0;
+                let existeFiancaSim = false;
+                let existeFiancaNao = false;
 
-      document.getElementById("meses-sem").textContent = somaMeses;
-      document.getElementById("multa-sem").textContent = somaMulta.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                checkboxes.forEach((chk, idx) => {
+                    if (chk.checked) {
+                        const artigo = artigos[idx];
+                        somaMeses += artigo.meses;
+                        somaMulta += artigo.multa;
 
-      document.getElementById("meses-com").textContent = Math.round(mesesDescontados);
-      document.getElementById("multa-com").textContent = multaDescontada.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    }
+                        if (artigo.fianca === "Sim") {
+                            existeFiancaSim = true;
+                        } else if (artigo.fianca === "Não") {
+                            existeFiancaNao = true;
+                        }
+                    }
+                });
 
-    function renderizarArtigos(filtro = "") {
-      lista.innerHTML = "";
-      artigos.forEach((artigo, idx) => {
-        if (artigo.nome.toLowerCase().includes(filtro.toLowerCase())) {
-          const div = document.createElement("div");
-          div.className = "artigo";
-          div.innerHTML = `
-            <input type="checkbox" id="artigo-${idx}">
-            <label for="artigo-${idx}">
-              <strong>${artigo.nome}</strong><br>
-              <small>${artigo.meses} meses • R$ ${artigo.multa.toLocaleString('pt-BR')}</small>
-            </label>
-          `;
-          div.querySelector("input").addEventListener("change", atualizarFicha);
-          lista.appendChild(div);
-        }
-      });
-    }
+                let desconto = 0;
+                let acrescimo = 0;
 
-    pesquisa.addEventListener("input", (e) => {
-      renderizarArtigos(e.target.value);
-    });
+                ajustes.forEach((ajuste) => {
+                    if (ajuste.checked) {
+                        const valor = parseFloat(ajuste.value);
+                        if (ajuste.dataset.tipo === "atenuante") {
+                            desconto += valor;
+                        } else if (ajuste.dataset.tipo === "agravante") {
+                            acrescimo += valor;
+                        }
+                    }
+                });
 
-    ajustes.forEach((el) => {
-      el.addEventListener("change", atualizarFicha);
-    });
+                const mesesDescontados = somaMeses * (1 - desconto / 100) * (1 + acrescimo / 100);
+                const multaDescontada = somaMulta * (1 - desconto / 100) * (1 + acrescimo / 100);
 
-    renderizarArtigos();
-  </script>
+                document.getElementById("meses-sem").textContent = somaMeses;
+                document.getElementById("multa-sem").textContent = somaMulta.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                document.getElementById("meses-com").textContent = Math.round(mesesDescontados);
+                document.getElementById("multa-com").textContent = multaDescontada.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+                // ✅ Atualizar campo Afiançável
+                const afiançavelEl = document.getElementById("afiançavel");
+                if (existeFiancaSim) {
+                    afiançavelEl.textContent = "Sim";
+                } else if (existeFiancaNao) {
+                    afiançavelEl.textContent = "Não";
+                } else {
+                    afiançavelEl.textContent = "-";
+                }
+            }
+
+            function renderizarArtigos(filtro = "") {
+                lista.innerHTML = "";
+                artigos.forEach((artigo, idx) => {
+                    if (artigo.nome.toLowerCase().includes(filtro.toLowerCase())) {
+                        const div = document.createElement("div");
+                        div.className = "artigo";
+                        div.innerHTML = `
+        <input type="checkbox" id="artigo-${idx}">
+        <label for="artigo-${idx}">
+          <strong>${artigo.nome}</strong><br>
+          <small>${artigo.meses} meses • R$ ${artigo.multa.toLocaleString('pt-BR')} • Fiança: ${artigo.fianca}</small>
+        </label>
+      `;
+                        div.querySelector("input").addEventListener("change", atualizarFicha);
+                        lista.appendChild(div);
+                    }
+                });
+            }
+
+            pesquisa.addEventListener("input", (e) => {
+                renderizarArtigos(e.target.value);
+            });
+
+            ajustes.forEach((el) => {
+                el.addEventListener("change", atualizarFicha);
+            });
+
+            artigos.sort((a, b) => a.nome.localeCompare(b.nome));
+            renderizarArtigos();
+        </script>
+
+
 </body>
 
 </html>
