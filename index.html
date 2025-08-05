@@ -12,8 +12,7 @@
             box-sizing: border-box;
         }
 
-        html,
-        body {
+        html, body {
             height: 100%;
             width: 100%;
         }
@@ -24,32 +23,50 @@
             background-position: center;
             background-repeat: no-repeat;
             font-family: Arial, sans-serif;
+            position: relative;
         }
 
         .conteudo {
             height: 100%;
             width: 100%;
             backdrop-filter: brightness(0.7);
-            /* escurece um pouco para dar contraste futuro */
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .conteudo h1 {
-            color: white;
-            font-size: 3rem;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            margin-left: -160px;
+        }
+
+        .botao {
+            padding: 25px 60px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.6);
+            border: 2px solid #fff;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            width: 400px;
+            text-align: center;
         }
 
         .rodape {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
             color: white;
             font-size: 12px;
             background-color: rgba(0, 0, 0, 0.3);
             padding: 5px 10px;
             border-radius: 5px;
-            text-align: right;
-            margin-bottom: 15px;
         }
 
         .topo {
@@ -60,38 +77,13 @@
             font-size: 24px;
             font-weight: bold;
         }
-
-        .botao {
-            display: block;
-            padding: 25px 60px;
-            font-size: 22px;
-            font-weight: bold;
-            color: #fff;
-            background-color: rgba(0, 0, 0, 0.6);
-            border: 2px solid #fff;
-            border-radius: 10px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            width: 300px;
-            text-align: center;
-        }
-
-        .container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 30px;
-            width: 300%;
-        }
     </style>
 </head>
 
 <body>
     <div class="conteudo">
         <div class="container">
-            <a href="/penal.html" class="botao">Calculadora Penal</a>
+            <a href="/penal.html" class="botao">𝐂𝐚𝐥𝐜𝐮𝐥𝐚𝐝𝐨𝐫𝐚 𝐏𝐞𝐧𝐚𝐥</a>
         </div>
     </div>
 
