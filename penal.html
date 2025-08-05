@@ -186,6 +186,24 @@
             background-color: rgba(255, 255, 255, 0.4);
             color: black;
         }
+
+        .botao-limpar {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .botao-limpar:hover {
+            background-color: white;
+            color: black;
+        }
     </style>
 </head>
 
@@ -240,6 +258,7 @@
             <!-- ✅ Adicione aqui -->
             <hr style="margin: 10px 0; border: none; border-top: 1px solid #aaa;" />
             <span>🧾 Afiançável: <strong id="afiançavel">-</strong></span>
+            <button id="limpar-ficha" class="botao-limpar">🧹 Limpar Ficha</button>
         </div>
 
 
@@ -413,6 +432,22 @@
 
             artigos.sort((a, b) => a.nome.localeCompare(b.nome));
             renderizarArtigos();
+
+            document.getElementById("limpar-ficha").addEventListener("click", () => {
+                // Desmarcar artigos
+                document.querySelectorAll(".artigo input[type='checkbox']").forEach(cb => cb.checked = false);
+
+                // Desmarcar atenuantes e agravantes
+                ajustes.forEach(cb => cb.checked = false);
+
+                // Resetar valores na ficha
+                document.getElementById("meses-sem").textContent = "0";
+                document.getElementById("multa-sem").textContent = "R$ 0,00";
+                document.getElementById("meses-com").textContent = "0";
+                document.getElementById("multa-com").textContent = "R$ 0,00";
+                document.getElementById("afiançavel").textContent = "-";
+            });
+
         </script>
 
 
