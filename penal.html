@@ -2,102 +2,233 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Supremo Tribunal Universo</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Supremo Tribunal Universo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        html,
-        body {
-            height: 100%;
-            width: 100%;
-        }
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+      font-family: Arial, sans-serif;
+    }
 
-        body {
-            background-image: url('imagens/fundo.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            font-family: Arial, sans-serif;
-        }
+    body {
+      background-image: url("imagens/fundo.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+    }
 
-        .conteudo {
-            height: 100%;
-            width: 100%;
-            backdrop-filter: brightness(0.7);
-            /* escurece um pouco para dar contraste futuro */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    .conteudo {
+      height: 100%;
+      width: 100%;
+      backdrop-filter: brightness(0.7);
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+    }
 
-        .conteudo h1 {
-            color: white;
-            font-size: 3rem;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
-        }
+    .coluna-esquerda {
+      width: 65%;
+    }
 
-        .rodape {
-            color: white;
-            font-size: 12px;
-            background-color: rgba(0, 0, 0, 0.3);
-            padding: 5px 10px;
-            border-radius: 5px;
-            text-align: right;
-            margin-bottom: 15px;
-        }
+    .coluna-direita {
+      width: 30%;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      border-radius: 10px;
+      height: fit-content;
+    }
 
-        .topo {
-            width: 100%;
-            background-color: rgba(248, 245, 245, 0.6);
-            padding: 15px 0;
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-        }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      border: none;
+      font-size: 16px;
+    }
 
-        .botao {
-            display: block;
-            padding: 25px 60px;
-            font-size: 22px;
-            font-weight: bold;
-            color: #fff;
-            background-color: rgba(0, 0, 0, 0.6);
-            border: 2px solid #fff;
-            border-radius: 10px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            width: 300px;
-            text-align: center;
-        }
+    .lista-artigos {
+      max-height: 60vh;
+      overflow-y: auto;
+      margin-bottom: 30px;
+    }
 
-        .container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 30px;
-            width: 300%;
-        }
-    </style>
+    .artigo {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+    }
+
+    .artigo input[type="checkbox"] {
+      margin-right: 10px;
+      transform: scale(1.2);
+    }
+
+    .ficha-criminal h2 {
+      margin-bottom: 10px;
+    }
+
+    .ficha-criminal span {
+      display: block;
+      margin: 8px 0;
+      font-size: 16px;
+    }
+
+    .ajustes {
+      margin-top: 20px;
+    }
+
+    .ajustes h3 {
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .ajustes label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .rodape {
+      color: white;
+      font-size: 12px;
+      background-color: rgba(0, 0, 0, 0.3);
+      padding: 5px 10px;
+      border-radius: 5px;
+      text-align: right;
+      margin: 10px;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="conteudo">
-        
+  <div class="conteudo">
+    <div class="coluna-esquerda">
+      <input type="text" id="pesquisa" placeholder="🔍 Pesquisar artigo..." />
+      <div id="lista-artigos" class="lista-artigos"></div>
+
+      <div class="ajustes">
+        <h3>Atenuantes</h3>
+        <label><input type="checkbox" class="ajuste" data-tipo="atenuante" value="40" /> Réu Primário (40%)</label>
+        <label><input type="checkbox" class="ajuste" data-tipo="atenuante" value="10" /> Réu Confesso (10%)</label>
+        <label><input type="checkbox" class="ajuste" data-tipo="atenuante" value="30" /> Colaboração (30%)</label>
+        <label><input type="checkbox" class="ajuste" data-tipo="atenuante" value="30" /> Delação Premiada (30%)</label>
+        <label><input type="checkbox" class="ajuste" data-tipo="atenuante" value="10" /> Arrependimento Posterior (10%)</label>
+
+        <h3 style="margin-top:20px;">Agravantes</h3>
+        <label><input type="checkbox" class="ajuste" data-tipo="agravante" value="20" /> Réu Foragido (20%)</label>
+        <label><input type="checkbox" class="ajuste" data-tipo="agravante" value="30" /> Reincidência (30%)</label>
+      </div>
     </div>
 
+    <div class="coluna-direita ficha-criminal">
+      <h2>Ficha Criminal</h2>
+      <span>🕓 Meses (sem desconto): <strong id="meses-sem">0</strong></span>
+      <span>💰 Multa (sem desconto): <strong id="multa-sem">R$ 0,00</strong></span>
+      <hr style="margin: 10px 0; border: none; border-top: 1px solid #aaa;" />
+      <span>🕓 Meses (com desconto): <strong id="meses-com">0</strong></span>
+      <span>💰 Multa (com desconto): <strong id="multa-com">R$ 0,00</strong></span>
+    </div>
+  </div>
 
+  <footer class="rodape">
+    © 2025 Supremo Tribunal Universo — Criado por Guilherme R
+  </footer>
 
-    <footer class="rodape">
-        © 2025 Supremo Tribunal Universo — Criado por Guilherme R
-    </footer>
+  <script>
+    const artigos = [
+      { nome: "Porte de C4", meses: 30, multa: 90000 },
+      { nome: "Trajes do Poder Público", meses: 60, multa: 150000 },
+      { nome: "Assalto ao Ice Storm", meses: 40, multa: 90000 },
+      { nome: "Invasão ao Departamento de Polícia", meses: 140, multa: 750000 },
+      { nome: "Corrupção Ativa (Suborno)", meses: 35, multa: 150000 },
+      { nome: "Homicídio Culposo", meses: 35, multa: 150000 }
+      // Adicione o restante aqui...
+    ];
+
+    const lista = document.getElementById("lista-artigos");
+    const pesquisa = document.getElementById("pesquisa");
+    const ajustes = document.querySelectorAll(".ajuste");
+
+    function atualizarFicha() {
+      const checkboxes = document.querySelectorAll(".artigo input[type='checkbox']");
+      let somaMeses = 0;
+      let somaMulta = 0;
+
+      checkboxes.forEach((chk, idx) => {
+        if (chk.checked) {
+          somaMeses += artigos[idx].meses;
+          somaMulta += artigos[idx].multa;
+        }
+      });
+
+      // Calcular total de porcentagem
+      let desconto = 0;
+      let acrescimo = 0;
+
+      ajustes.forEach((ajuste) => {
+        if (ajuste.checked) {
+          const valor = parseFloat(ajuste.value);
+          if (ajuste.dataset.tipo === "atenuante") {
+            desconto += valor;
+          } else if (ajuste.dataset.tipo === "agravante") {
+            acrescimo += valor;
+          }
+        }
+      });
+
+      // Aplicar descontos e acréscimos
+      const mesesDescontados = somaMeses * (1 - desconto / 100) * (1 + acrescimo / 100);
+      const multaDescontada = somaMulta * (1 - desconto / 100) * (1 + acrescimo / 100);
+
+      document.getElementById("meses-sem").textContent = somaMeses;
+      document.getElementById("multa-sem").textContent = somaMulta.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+      document.getElementById("meses-com").textContent = Math.round(mesesDescontados);
+      document.getElementById("multa-com").textContent = multaDescontada.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    function renderizarArtigos(filtro = "") {
+      lista.innerHTML = "";
+      artigos.forEach((artigo, idx) => {
+        if (artigo.nome.toLowerCase().includes(filtro.toLowerCase())) {
+          const div = document.createElement("div");
+          div.className = "artigo";
+          div.innerHTML = `
+            <input type="checkbox" id="artigo-${idx}">
+            <label for="artigo-${idx}">
+              <strong>${artigo.nome}</strong><br>
+              <small>${artigo.meses} meses • R$ ${artigo.multa.toLocaleString('pt-BR')}</small>
+            </label>
+          `;
+          div.querySelector("input").addEventListener("change", atualizarFicha);
+          lista.appendChild(div);
+        }
+      });
+    }
+
+    pesquisa.addEventListener("input", (e) => {
+      renderizarArtigos(e.target.value);
+    });
+
+    ajustes.forEach((el) => {
+      el.addEventListener("change", atualizarFicha);
+    });
+
+    renderizarArtigos();
+  </script>
 </body>
 
 </html>
