@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supremo Tribunal Universo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+        }
+
+        body {
+            background-image: url('imagens/fundo.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+        }
+
+        .conteudo {
+            height: 100%;
+            width: 100%;
+            backdrop-filter: brightness(0.7);
+            /* escurece um pouco para dar contraste futuro */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .conteudo h1 {
+            color: white;
+            font-size: 3rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .rodape {
+            color: white;
+            font-size: 12px;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-align: right;
+            margin-bottom: 15px;
+        }
+
+        .topo {
+            width: 100%;
+            background-color: rgba(248, 245, 245, 0.6);
+            padding: 15px 0;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .botao {
+            display: block;
+            padding: 25px 60px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.6);
+            border: 2px solid #fff;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            width: 300px;
+            text-align: center;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            width: 300%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="conteudo">
+        <div class="container">
+            <a href="/penal.html" class="botao">Calculadora Penal</a>
+        </div>
+    </div>
+
+    <footer class="rodape">
+        © 2025 Supremo Tribunal Universo — Criado por Guilherme R
+    </footer>
+</body>
+
+</html>
