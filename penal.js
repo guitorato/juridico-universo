@@ -57,6 +57,7 @@ const artigos = [
     { nome: "Porte de Arma Pesada", meses: 45, multa: 135000, fianca: "Não" },
     { nome: "Porte de C4", meses: 30, multa: 90000, fianca: "Não" },
     { nome: "Porte de Drogas", meses: 30, multa: 90000, fianca: "Sim" }
+    { nome: "Tentativa de Homicidio", meses: 40, multa: 150000, fianca: "Não" }
 ];
 
 artigos.sort((a, b) => a.nome.localeCompare(b.nome));
