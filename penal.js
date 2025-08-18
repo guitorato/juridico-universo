@@ -66,84 +66,99 @@ const lista = document.getElementById("lista-artigos");
 const pesquisa = document.getElementById("pesquisa");
 const ajustes = document.querySelectorAll(".ajuste");
 
+// Conjunto com índices reais de artigos selecionados (persiste entre re-renderizações)
+const selecionados = new Set();
+
 function atualizarFicha() {
-    const checkboxes = document.querySelectorAll(".artigo input[type='checkbox']");
-    let somaMeses = 0;
-    let somaMulta = 0;
-    let existeFiancaSim = false;
-    let existeFiancaNao = false;
+  let somaMeses = 0;
+  let somaMulta = 0;
+  let existeFiancaSim = false;
+  let existeFiancaNao = false;
 
-    checkboxes.forEach((chk) => {
-        if (chk.checked) {
-            const idx = parseInt(chk.dataset.idx);
-            const artigo = artigos[idx];
-            somaMeses += artigo.meses;
-            somaMulta += artigo.multa;
-            if (artigo.fianca === "Sim") existeFiancaSim = true;
-            if (artigo.fianca === "Não") existeFiancaNao = true;
-        }
-    });
+  // Soma com base no estado, não no DOM
+  selecionados.forEach((idx) => {
+    const artigo = artigos[idx];
+    somaMeses += artigo.meses;
+    somaMulta += artigo.multa;
+    if (artigo.fianca === "Sim") existeFiancaSim = true;
+    if (artigo.fianca === "Não") existeFiancaNao = true;
+  });
 
-    let desconto = 0;
-    let acrescimo = 0;
+  let desconto = 0;
+  let acrescimo = 0;
 
-    ajustes.forEach((ajuste) => {
-        if (ajuste.checked) {
-            const valor = parseFloat(ajuste.value);
-            if (ajuste.dataset.tipo === "atenuante") desconto += valor;
-            else if (ajuste.dataset.tipo === "agravante") acrescimo += valor;
-        }
-    });
+  ajustes.forEach((ajuste) => {
+    if (ajuste.checked) {
+      const valor = parseFloat(ajuste.value);
+      if (ajuste.dataset.tipo === "atenuante") desconto += valor;
+      else if (ajuste.dataset.tipo === "agravante") acrescimo += valor;
+    }
+  });
 
-    const mesesDescontados = somaMeses * (1 - desconto / 100) * (1 + acrescimo / 100);
-    const multaDescontada = somaMulta * (1 - desconto / 100) * (1 + acrescimo / 100);
+  const mesesDescontados = somaMeses * (1 - desconto / 100) * (1 + acrescimo / 100);
+  const multaDescontada = somaMulta * (1 - desconto / 100) * (1 + acrescimo / 100);
 
-    document.getElementById("meses-sem").textContent = somaMeses;
-    document.getElementById("multa-sem").textContent = somaMulta.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    document.getElementById("meses-com").textContent = Math.round(mesesDescontados);
-    document.getElementById("multa-com").textContent = multaDescontada.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  document.getElementById("meses-sem").textContent = somaMeses;
+  document.getElementById("multa-sem").textContent = somaMulta.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  document.getElementById("meses-com").textContent = Math.round(mesesDescontados);
+  document.getElementById("multa-com").textContent = multaDescontada.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
-    document.getElementById("afiançavel").textContent = existeFiancaSim ? "Sim" : (existeFiancaNao ? "Não" : "-");
+  document.getElementById("afiançavel").textContent = existeFiancaSim ? "Sim" : (existeFiancaNao ? "Não" : "-");
 }
 
 function renderizarArtigos(filtro = "") {
-    lista.innerHTML = "";
-    const filtrados = artigos
-        .filter(artigo => artigo.nome.toLowerCase().includes(filtro.toLowerCase()))
-        .slice(0, 5);
+  // Guarde o que já estava selecionado (já está no Set)
+  lista.innerHTML = "";
 
-    filtrados.forEach((artigo, visualIndex) => {
-        const realIndex = artigos.findIndex(a => a.nome === artigo.nome); // índice original
-        const div = document.createElement("div");
-        div.className = "artigo";
-        div.innerHTML = `
-            <input type="checkbox" id="artigo-${realIndex}" data-idx="${realIndex}">
-            <label for="artigo-${realIndex}">
-                <strong>${artigo.nome}</strong><br>
-                <small>${artigo.meses} meses • R$ ${artigo.multa.toLocaleString('pt-BR')} • Fiança: ${artigo.fianca}</small>
-            </label>
-        `;
-        div.querySelector("input").addEventListener("change", atualizarFicha);
-        lista.appendChild(div);
+  const filtrados = artigos.filter(a =>
+    a.nome.toLowerCase().includes(filtro.toLowerCase())
+  ); // <- sem slice!
+
+  filtrados.forEach((artigo) => {
+    const realIndex = artigos.findIndex(a => a.nome === artigo.nome); // índice original
+    const id = `artigo-${realIndex}`;
+
+    const div = document.createElement("div");
+    div.className = "artigo";
+    div.innerHTML = `
+      <input type="checkbox" id="${id}" data-idx="${realIndex}" ${selecionados.has(realIndex) ? "checked" : ""}>
+      <label for="${id}">
+        <strong>${artigo.nome}</strong><br>
+        <small>${artigo.meses} meses • R$ ${artigo.multa.toLocaleString('pt-BR')} • Fiança: ${artigo.fianca}</small>
+      </label>
+    `;
+
+    const chk = div.querySelector("input");
+    chk.addEventListener("change", (e) => {
+      const idx = parseInt(e.target.dataset.idx, 10);
+      if (e.target.checked) selecionados.add(idx);
+      else selecionados.delete(idx);
+      atualizarFicha();
     });
+
+    lista.appendChild(div);
+  });
 }
 
 pesquisa.addEventListener("input", (e) => {
-    renderizarArtigos(e.target.value);
+  renderizarArtigos(e.target.value);
 });
 
 ajustes.forEach((el) => {
-    el.addEventListener("change", atualizarFicha);
+  el.addEventListener("change", atualizarFicha);
 });
 
 document.getElementById("limpar-ficha").addEventListener("click", () => {
-    document.querySelectorAll(".artigo input[type='checkbox']").forEach(cb => cb.checked = false);
-    ajustes.forEach(cb => cb.checked = false);
-    document.getElementById("meses-sem").textContent = "0";
-    document.getElementById("multa-sem").textContent = "R$ 0,00";
-    document.getElementById("meses-com").textContent = "0";
-    document.getElementById("multa-com").textContent = "R$ 0,00";
-    document.getElementById("afiançavel").textContent = "-";
+  selecionados.clear();
+  document.querySelectorAll(".ajuste").forEach(cb => cb.checked = false);
+  document.getElementById("meses-sem").textContent = "0";
+  document.getElementById("multa-sem").textContent = "R$ 0,00";
+  document.getElementById("meses-com").textContent = "0";
+  document.getElementById("multa-com").textContent = "R$ 0,00";
+  document.getElementById("afiançavel").textContent = "-";
+
+  // re-render para refletir desmarcação visual
+  renderizarArtigos(pesquisa.value || "");
 });
 
 renderizarArtigos();
