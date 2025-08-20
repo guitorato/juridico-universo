@@ -155,8 +155,9 @@
             position: fixed;
             right: 20px;
             top: 400px;
-            z-index: 100;
+            z-index: 0;
         }
+
 
         .ficha-criminal h2 {
             margin-bottom: 10px;
@@ -196,6 +197,7 @@
             font-size: 26px;
             margin: 10;
         }
+
 
         .botao-voltar {
             justify-self: end;
@@ -279,10 +281,13 @@
             <span>💰 Multa (com desconto): <strong id="multa-com">R$ 0,00</strong></span>
             <hr style="margin: 10px 0; border: none; border-top: 1px solid #aaa;" />
             <span>🧾 Afiançável: <strong id="afiançavel">-</strong></span>
+            <hr style="margin: 10px 0; border: none; border-top: 1px solid #aaa;" />
+            <span>🧾 Atenuantes: <strong id="soma-atenuantes">0%</strong></span>
+            <span>🧾 Agravantes: <strong id="soma-agravantes">0%</strong></span>
             <button id="limpar-ficha" class="botao-limpar">🧹 Limpar Ficha</button>
         </div>
         <div class="image-logo">
-            <img src="imagens/logo.png" alt="Logo Supremo" style="width: 100%; margin-top: 20px;" />
+            <img src="imagens/logo.png" alt="Logo Supremo" style="width: 100%; margin-top: 80px;" />
         </div>
 
     </div>
